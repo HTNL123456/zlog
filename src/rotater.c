@@ -85,7 +85,7 @@ zlog_rotater_t *zlog_rotater_new(char *lock_file)
 
 	zc_assert(lock_file, NULL);
 
-	a_rotater = calloc(1, sizeof(zlog_rotater_t));
+	a_rotater = av_calloc(1, sizeof(zlog_rotater_t));
 	if (!a_rotater) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
