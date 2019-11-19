@@ -87,7 +87,7 @@ void zlog_conf_del(zlog_conf_t * a_conf)
 	if (a_conf->default_format) zlog_format_del(a_conf->default_format);
 	if (a_conf->formats) zc_arraylist_del(a_conf->formats);
 	if (a_conf->rules) zc_arraylist_del(a_conf->rules);
-	free(a_conf);
+	av_free(a_conf);
 	zc_debug("zlog_conf_del[%p]");
 	return;
 }
@@ -108,7 +108,7 @@ zlog_conf_t *zlog_conf_new(const char *config)
 	int cfg_source = 0;
 	zlog_conf_t *a_conf = NULL;
 
-	a_conf = calloc(1, sizeof(zlog_conf_t));
+	a_conf = av_calloc(1, sizeof(zlog_conf_t));
 	if (!a_conf) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

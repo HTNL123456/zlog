@@ -20,7 +20,7 @@ void zlog_record_del(zlog_record_t *a_record)
 {
 	zc_assert(a_record,);
 	zc_debug("zlog_record_del[%p]", a_record);
-    free(a_record);
+    av_free(a_record);
 	return;
 }
 
@@ -31,7 +31,7 @@ zlog_record_t *zlog_record_new(const char *name, zlog_record_fn output)
 	zc_assert(name, NULL);
 	zc_assert(output, NULL);
 
-	a_record = calloc(1, sizeof(zlog_record_t));
+	a_record = av_calloc(1, sizeof(zlog_record_t));
 	if (!a_record) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

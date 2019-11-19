@@ -47,7 +47,7 @@ void zlog_format_del(zlog_format_t * a_format)
 		zc_arraylist_del(a_format->pattern_specs);
 	}
 	zc_debug("zlog_format_del[%p]", a_format);
-    free(a_format);
+    av_free(a_format);
 	return;
 }
 
@@ -64,7 +64,7 @@ zlog_format_t *zlog_format_new(char *line, int * time_cache_count)
 
 	zc_assert(line, NULL);
 
-	a_format = calloc(1, sizeof(zlog_format_t));
+	a_format = av_calloc(1, sizeof(zlog_format_t));
 	if (!a_format) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

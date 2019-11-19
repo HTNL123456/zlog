@@ -33,16 +33,16 @@ zc_hashtable_t *zc_hashtable_new(size_t a_size,
 {
 	zc_hashtable_t *a_table;
 
-	a_table = calloc(1, sizeof(*a_table));
+	a_table = av_calloc(1, sizeof(*a_table));
 	if (!a_table) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
 	}
 
-	a_table->tab = calloc(a_size, sizeof(*(a_table->tab)));
+	a_table->tab = av_calloc(a_size, sizeof(*(a_table->tab)));
 	if (!a_table->tab) {
 		zc_error("calloc fail, errno[%d]", errno);
-		free(a_table);
+		av_free(a_table);
 		return NULL;
 	}
 	a_table->tab_size = a_size;
@@ -78,12 +78,12 @@ void zc_hashtable_del(zc_hashtable_t * a_table)
 			if (a_table->value_del) {
 				a_table->value_del(p->value);
 			}
-			free(p);
+			av_free(p);
 		}
 	}
 	if (a_table->tab)
-		free(a_table->tab);
-	free(a_table);
+		av_free(a_table->tab);
+	av_free(a_table);
 
 	return;
 }
@@ -103,7 +103,7 @@ void zc_hashtable_clean(zc_hashtable_t * a_table)
 			if (a_table->value_del) {
 				a_table->value_del(p->value);
 			}
-			free(p);
+			av_free(p);
 		}
 		(a_table->tab)[i] = NULL;
 	}
@@ -121,7 +121,7 @@ static int zc_hashtable_rehash(zc_hashtable_t * a_table)
 	zc_hashtable_entry_t *q;
 
 	tab_size = 2 * a_table->tab_size;
-	tab = calloc(tab_size, sizeof(*tab));
+	tab = av_calloc(tab_size, sizeof(*tab));
 	if (!tab) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return -1;
@@ -141,7 +141,7 @@ static int zc_hashtable_rehash(zc_hashtable_t * a_table)
 			tab[j] = p;
 		}
 	}
-	free(a_table->tab);
+	av_free(a_table->tab);
 	a_table->tab = tab;
 	a_table->tab_size = tab_size;
 
@@ -207,7 +207,7 @@ int zc_hashtable_put(zc_hashtable_t * a_table, void *a_key, void *a_value)
 			}
 		}
 
-		p = calloc(1, sizeof(*p));
+		p = av_calloc(1, sizeof(*p));
 		if (!p) {
 			zc_error("calloc fail, errno[%d]", errno);
 			return -1;
@@ -271,7 +271,7 @@ void zc_hashtable_remove(zc_hashtable_t * a_table, const void *a_key)
 		a_table->tab[i] = p->next;
 	}
 
-	free(p);
+	av_free(p);
 	a_table->nelem--;
 
 	return;

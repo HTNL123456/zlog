@@ -459,7 +459,7 @@ void zlog_spec_del(zlog_spec_t * a_spec)
 {
 	zc_assert(a_spec,);
 	zc_debug("zlog_spec_del[%p]", a_spec);
-    free(a_spec);
+    av_free(a_spec);
 }
 
 /* a spec may consist of
@@ -476,7 +476,7 @@ zlog_spec_t *zlog_spec_new(char *pattern_start, char **pattern_next, int *time_c
 	zc_assert(pattern_start, NULL);
 	zc_assert(pattern_next, NULL);
 
-	a_spec = calloc(1, sizeof(zlog_spec_t));
+	a_spec = av_calloc(1, sizeof(zlog_spec_t));
 	if (!a_spec) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

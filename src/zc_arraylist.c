@@ -17,7 +17,7 @@ zc_arraylist_t *zc_arraylist_new(zc_arraylist_del_fn del)
 {
 	zc_arraylist_t *a_list;
 
-	a_list = (zc_arraylist_t *) calloc(1, sizeof(zc_arraylist_t));
+	a_list = (zc_arraylist_t *) av_calloc(1, sizeof(zc_arraylist_t));
 	if (!a_list) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
@@ -27,10 +27,10 @@ zc_arraylist_t *zc_arraylist_new(zc_arraylist_del_fn del)
 
 	/* this could be NULL */
 	a_list->del = del;
-	a_list->array = (void **)calloc(a_list->size, sizeof(void *));
+	a_list->array = (void **)av_calloc(a_list->size, sizeof(void *));
 	if (!a_list->array) {
 		zc_error("calloc fail, errno[%d]", errno);
-		free(a_list);
+		av_free(a_list);
 		return NULL;
 	}
 
@@ -50,8 +50,8 @@ void zc_arraylist_del(zc_arraylist_t * a_list)
 		}
 	}
 	if (a_list->array)
-		free(a_list->array);
-	free(a_list);
+		av_free(a_list->array);
+	av_free(a_list);
 	return;
 }
 
@@ -62,7 +62,7 @@ static int zc_arraylist_expand_inner(zc_arraylist_t * a_list, int max)
 	int diff_size;
 
 	new_size = zc_max(a_list->size * 2, max);
-	tmp = realloc(a_list->array, new_size * sizeof(void *));
+	tmp = av_realloc(a_list->array, new_size * sizeof(void *));
 	if (!tmp) {
 		zc_error("realloc fail, errno[%d]", errno);
 		return -1;

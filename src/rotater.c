@@ -74,7 +74,7 @@ void zlog_rotater_del(zlog_rotater_t *a_rotater)
 	}
 
 	zc_debug("zlog_rotater_del[%p]", a_rotater);
-    free(a_rotater);
+    av_free(a_rotater);
 	return;
 }
 
@@ -93,7 +93,7 @@ zlog_rotater_t *zlog_rotater_new(char *lock_file)
 
 	if (pthread_mutex_init(&(a_rotater->lock_mutex), NULL)) {
 		zc_error("pthread_mutex_init fail, errno[%d]", errno);
-		free(a_rotater);
+		av_free(a_rotater);
 		return NULL;
 	}
 
@@ -125,7 +125,7 @@ static void zlog_file_del(zlog_file_t * a_file)
 {
 	zc_debug("del onefile[%p]", a_file);
 	zc_debug("a_file->path[%s]", a_file->path);
-	free(a_file);
+	av_free(a_file);
 }
 
 static zlog_file_t *zlog_file_check_new(zlog_rotater_t * a_rotater, const char *path)
@@ -144,7 +144,7 @@ static zlog_file_t *zlog_file_check_new(zlog_rotater_t * a_rotater, const char *
 		return NULL;
 	}
 
-	a_file = calloc(1, sizeof(zlog_file_t));
+	a_file = av_calloc(1, sizeof(zlog_file_t));
 	if (!a_file) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
@@ -168,7 +168,7 @@ static zlog_file_t *zlog_file_check_new(zlog_rotater_t * a_rotater, const char *
 
 	return a_file;
 err:
-	free(a_file);
+	av_free(a_file);
 	return NULL;
 }
 

@@ -32,7 +32,7 @@ void zlog_level_del(zlog_level_t *a_level)
 {
 	zc_assert(a_level,);
 	zc_debug("zlog_level_del[%p]", a_level);
-    free(a_level);
+    av_free(a_level);
 	return;
 }
 
@@ -96,7 +96,7 @@ zlog_level_t *zlog_level_new(char *line)
 		return NULL;
 	}
 
-	a_level = calloc(1, sizeof(zlog_level_t));
+	a_level = av_calloc(1, sizeof(zlog_level_t));
 	if (!a_level) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

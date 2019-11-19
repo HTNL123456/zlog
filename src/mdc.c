@@ -35,21 +35,21 @@ void zlog_mdc_del(zlog_mdc_t * a_mdc)
 	zc_assert(a_mdc,);
 	if (a_mdc->tab) zc_hashtable_del(a_mdc->tab);
 	zc_debug("zlog_mdc_del[%p]", a_mdc);
-    free(a_mdc);
+    av_free(a_mdc);
 	return;
 }
 
 static void zlog_mdc_kv_del(zlog_mdc_kv_t * a_mdc_kv)
 {
 	zc_debug("zlog_mdc_kv_del[%p]", a_mdc_kv);
-    free(a_mdc_kv);
+    av_free(a_mdc_kv);
 }
 
 static zlog_mdc_kv_t *zlog_mdc_kv_new(const char *key, const char *value)
 {
 	zlog_mdc_kv_t *a_mdc_kv;
 
-	a_mdc_kv = calloc(1, sizeof(zlog_mdc_kv_t));
+	a_mdc_kv = av_calloc(1, sizeof(zlog_mdc_kv_t));
 	if (!a_mdc_kv) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
@@ -64,7 +64,7 @@ zlog_mdc_t *zlog_mdc_new(void)
 {
 	zlog_mdc_t *a_mdc;
 
-	a_mdc = calloc(1, sizeof(zlog_mdc_t));
+	a_mdc = av_calloc(1, sizeof(zlog_mdc_t));
 	if (!a_mdc) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

@@ -66,7 +66,7 @@ void intercept(int sig)
 		printf("%d;%lld\n", tinfo[i].thread_num, tinfo[i].loop);
     }
 
-    free(tinfo);
+    av_free(tinfo);
 
     zlog_fini();
 }
@@ -145,7 +145,7 @@ int main(int argc, char** argv)
 	}
 
 	// start threads
-    tinfo = calloc(NB_THREADS, sizeof(struct thread_info));
+    tinfo = av_calloc(NB_THREADS, sizeof(struct thread_info));
 	for (i=0; i<NB_THREADS; i++)
 	{
         tinfo[i].thread_num = i + 1;

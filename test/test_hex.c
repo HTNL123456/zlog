@@ -35,7 +35,7 @@ static int ReadTotalFile( FILE * fp , char ** ptr , long * len )
                 return -2;
         }
 
-        if( ( pStart = calloc(1, fileLen+1) ) == NULL )
+        if( ( pStart = av_calloc(1, fileLen+1) ) == NULL )
         {
                 return -3;
         }
@@ -43,14 +43,14 @@ static int ReadTotalFile( FILE * fp , char ** ptr , long * len )
         nret = fseek( fp , 0L , SEEK_SET );
         if( nret )
         {
-                free( pStart );
+                av_free( pStart );
                 return -4;
         }
 
         nret = fread( pStart , fileLen , 1 , fp );
         if( ferror( fp ) )
         {
-                free( pStart );
+                av_free( pStart );
                 return -5;
         }
 
@@ -103,7 +103,7 @@ int main(int argc, char** argv)
 	while(ntimes--) hzlog_debug(zc, dmp, dmp_len);
 
 	fclose(fp);
-	free(dmp);
+	av_free(dmp);
 
 	zlog_fini();
 	printf("hex log end\n");

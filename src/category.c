@@ -38,7 +38,7 @@ void zlog_category_del(zlog_category_t * a_category)
 	zc_assert(a_category,);
 	if (a_category->fit_rules) zc_arraylist_del(a_category->fit_rules);
 	zc_debug("zlog_category_del[%p]", a_category);
-    free(a_category);
+    av_free(a_category);
 	return;
 }
 
@@ -124,7 +124,7 @@ zlog_category_t *zlog_category_new(const char *name, zc_arraylist_t * rules)
 		zc_error("name[%s] too long", name);
 		return NULL;
 	}
-	a_category = calloc(1, sizeof(zlog_category_t));
+	a_category = av_calloc(1, sizeof(zlog_category_t));
 	if (!a_category) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;

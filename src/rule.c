@@ -593,7 +593,7 @@ zlog_rule_t *zlog_rule_new(char *line,
 	zc_assert(default_format, NULL);
 	zc_assert(formats, NULL);
 
-	a_rule = calloc(1, sizeof(zlog_rule_t));
+	a_rule = av_calloc(1, sizeof(zlog_rule_t));
 	if (!a_rule) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
@@ -959,7 +959,7 @@ void zlog_rule_del(zlog_rule_t * a_rule)
 		a_rule->archive_specs = NULL;
 	}
 	zc_debug("zlog_rule_del[%p]", a_rule);
-    free(a_rule);
+    av_free(a_rule);
 	return;
 }
 

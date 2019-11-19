@@ -78,9 +78,9 @@ void zlog_buf_profile(zlog_buf_t * a_buf, int flag)
 void zlog_buf_del(zlog_buf_t * a_buf)
 {
 	//zc_assert(a_buf,);
-	if (a_buf->start) free(a_buf->start);
+	if (a_buf->start) av_free(a_buf->start);
 	zc_debug("zlog_buf_del[%p]", a_buf);
-    free(a_buf);
+    av_free(a_buf);
 	return;
 }
 
@@ -99,7 +99,7 @@ zlog_buf_t *zlog_buf_new(size_t buf_size_min, size_t buf_size_max, const char *t
 		return NULL;
 	}
 
-	a_buf = calloc(1, sizeof(*a_buf));
+	a_buf = av_calloc(1, sizeof(*a_buf));
 	if (!a_buf) {
 		zc_error("calloc fail, errno[%d]", errno);
 		return NULL;
@@ -119,7 +119,7 @@ zlog_buf_t *zlog_buf_new(size_t buf_size_min, size_t buf_size_max, const char *t
 	a_buf->size_max = buf_size_max;
 	a_buf->size_real = a_buf->size_min;
 
-	a_buf->start = calloc(1, a_buf->size_real);
+	a_buf->start = av_calloc(1, a_buf->size_real);
 	if (!a_buf->start) {
 		zc_error("calloc fail, errno[%d]", errno);
 		goto err;
@@ -187,7 +187,7 @@ static int zlog_buf_resize(zlog_buf_t * a_buf, size_t increment)
 	p = realloc(a_buf->start, new_size);
 	if (!p) {
 		zc_error("realloc fail, errno[%d]", errno);
-		free(a_buf->start);
+		av_free(a_buf->start);
 		a_buf->start = NULL;
 		a_buf->tail = NULL;
 		a_buf->end = NULL;
