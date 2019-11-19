@@ -184,7 +184,7 @@ static int zlog_buf_resize(zlog_buf_t * a_buf, size_t increment)
 	}
 
 	len = a_buf->tail - a_buf->start;
-	p = realloc(a_buf->start, new_size);
+	p = av_realloc(a_buf->start, new_size);
 	if (!p) {
 		zc_error("realloc fail, errno[%d]", errno);
 		av_free(a_buf->start);
